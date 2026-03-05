@@ -4,7 +4,7 @@
 
 # Jamf Extender
 
-**v1.0.2**
+**v1.0.4**
 
 A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data — without navigating away from the page.
 
