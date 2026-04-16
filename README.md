@@ -4,13 +4,11 @@
 
 # Jamf Extender
 
-**v1.0.5**
-
 A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data — without navigating away from the page.
 
 [Install from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk)
 
-## What's new in 1.0.5
+## What's new
 
 ### Custom Jamf Pro Domains (Self-Hosted)
 
