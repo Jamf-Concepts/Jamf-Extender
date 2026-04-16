@@ -4,11 +4,27 @@
 
 # Jamf Extender
 
-A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data — without navigating away from the page.
+A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data without navigating away from the page.
 
-[Install from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk)
+[Install for Safari from Mac App Store](https://apps.apple.com/us/app/jamf-extender/id6761075435?mt=12)
 
-## What's new
+[Install for Firefox from Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/jamf-extender/)
+
+[Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
+
+## What's new in 1.2.0
+
+### macOS Keychain Integration
+
+Jamf Pro API credentials are now stored encrypted in the macOS Keychain instead of unencrypted browser storage. The **Jamf Extender Safari app** acts as a Keychain gateway for all browsers — credentials saved in any browser are shared via a single Keychain entry. Safari uses Keychain automatically; Chrome, Edge, and Firefox can opt in by opening the Safari app and clicking **"Set Up Other Browsers"**. Existing credentials are migrated automatically on first launch. Falls back to browser storage if the Safari app is not installed.
+
+### Mobile Device Apps — XML Validator
+
+A live XML/Plist syntax assistant on the mobile device app detail page (`mobileDeviceApps.html?id={id}`). As you type in the AppConfig plist textarea, the assistant checks for bracket/quote balance, malformed tags, unescaped `&` characters, tag matching, plist structure (key/value alternation in `<dict>`), leading/trailing whitespace, and empty values. A line-number gutter is injected alongside the textarea. Issues show severity, line number, and a suggested fix. Runs entirely client-side — no credentials required.
+
+### Change Management Logs — Advanced Filtering
+
+An **Advanced Filtering** bar is injected above the Change Management Logs table with per-column filters: free-text inputs for Username, Object Type, and Object Name, plus an Action dropdown (Created, Updated, Deleted, etc.). Filters apply live as you type and combine with AND logic. A row counter shows how many entries match, and a Clear button resets all filters in one click — much faster than scrolling or re-sorting the native table.
 
 ### Custom Jamf Pro Domains (Self-Hosted)
 
@@ -20,16 +36,6 @@ If your Jamf Pro instance uses a custom domain (e.g., `jss.company.com:8443`, `j
 4. Run **Quick Setup** to create API credentials for the new instance
 
 The access grant is permanent as long as you have the browser installed, and it persists across browser restarts. All features work identically on custom domains. The sidebar panel (inside Jamf Pro) shows the custom domain list and supports deletion, but adding new domains must be done from the extension popup.
-
-### Licensed Software (Application Usage)
-
-- **Application Usage Report** — On the Licensed Software list page (`licensedSoftware.html`), a panel above the table lets you select an Advanced Computer Search, pick a time range (1 day, 7 days, 30 days, 3 months, 1 year, or custom dates), and run an aggregated application usage report across all computers in that search. Results show each application's total foreground time, total opens, and number of distinct computers — sortable by any column and filterable by app name. The selected search is saved per Jamf Pro instance.
-- **Unused App Search** — A second tab on the same panel. Enter an application name (case-insensitive partial match), select an Advanced Computer Search and time range, then click "Find Devices" to discover all computers that have NOT used that application in the specified period. Results show Computer Name (linked to device record), Serial Number, Username, Email, Model, and Computer ID with a summary count (e.g., "12 of 50 devices have not used Self Service in the last 30 days"). Export results as CSV (named after the search) via the "Export CSV" button. Save your search configuration (search + app name + time range) with "Save Search" and reload it later from the "Saved Searches" dropdown.
-
-### Quality of Life
-
-- **Auto-Scan Group Usage** — By default, smart group usage scanning requires clicking a "Scan for Smart Group Usage" button on the smart groups list page. Enable "Auto-scan group usage on load" in **Preferences** to automatically scan when the page loads (previous behavior).
-- **Update Notifications** — The extension checks GitHub for a newer version and shows "Update Available" (blue pill) when one exists. Clicking the pill shows a modal with update instructions. Can be toggled on/off in **Preferences** (enabled by default). Version check results are cached for 1 hour.
 
 ## Features
 
@@ -65,10 +71,26 @@ The access grant is permanent as long as you have the browser installed, and it 
   - **Caution** — Ongoing frequency + Recurring Check-in trigger (scoped to specific groups/computers)
   - **Warning** — Ongoing frequency + Recurring Check-in trigger + All Computers scope
 
+### Blueprints
+
+- **Settings Hover Popover** — Hover over a blueprint name or "Open" button on the blueprints list page to see all configured settings (DDM profiles, passcode policies, software update settings, and more) with human-readable setting names and color-coded values.
+- **Scope Hover Popover** — Hover over "Scoped to" on any blueprint card to see the resolved scope: targeted smart groups with device membership, computer names, and serial numbers. Includes an **Export CSV** button for full device-level scope reports.
+
 ### Licensed Software (Application Usage)
 
 - **Application Usage Report** — On the Licensed Software list page (`licensedSoftware.html`), a panel above the table lets you select an Advanced Computer Search, pick a time range (1 day, 7 days, 30 days, 3 months, 1 year, or custom dates), and run an aggregated application usage report across all computers in that search. Results show each application's total foreground time, total opens, and number of distinct computers — sortable by any column and filterable by app name. The selected search is saved per Jamf Pro instance.
 - **Unused App Search** — A second tab on the same panel. Enter an application name (case-insensitive partial match), select an Advanced Computer Search and time range, then click "Find Devices" to discover all computers that have NOT used that application in the specified period. Results show Computer Name (linked to device record), Serial Number, Username, Email, Model, and Computer ID with a summary count (e.g., "12 of 50 devices have not used Self Service in the last 30 days"). Export results as CSV (named after the search) via the "Export CSV" button. Save your search configuration (search + app name + time range) with "Save Search" and reload it later from the "Saved Searches" dropdown.
+
+### Mobile Device Apps — XML Validator
+
+- **Live Syntax Assistant** — On the mobile device app detail/edit page (`mobileDeviceApps.html?id={id}`), a validation panel appears below the AppConfig plist textarea. As you type, the assistant checks bracket/quote balance, malformed tags, unescaped `&` characters, tag matching, plist structure (key/value alternation in `<dict>`), leading/trailing whitespace in values, and empty/blank elements.
+- **Line Number Gutter** — A line-number gutter is injected alongside the textarea for quick reference when issues point at specific lines.
+- **Issue Cards** — Problems are listed with severity badges, line numbers, and suggested fixes. Runs entirely client-side — no credentials required.
+
+### Change Management Logs
+
+- **Advanced Filtering Bar** — On the Change Management Logs page, a filter bar is injected above the native table with free-text inputs for Username, Object Type, and Object Name, plus an Action dropdown. Filters apply live and combine with AND logic.
+- **Row Counter + Clear** — A live count of matching rows updates as you type. A Clear button resets all filters in a single click.
 
 ### Jamf Security Cloud (Security Cloud)
 
@@ -97,11 +119,24 @@ The access grant is permanent as long as you have the browser installed, and it 
 - **Cancel & Resume** — Cancel a running batch at any time. Reopen the popup to see current progress or results.
 - **Results & Log** — After completion, see succeeded/failed counts with a scrollable error list. Download a CSV log of all results.
 
+### Custom Jamf Pro Domains (Self-Hosted)
+
+- **Self-Hosted Support** — Works out of the box with `*.jamfcloud.com` instances, and supports self-hosted or custom domain Jamf Pro instances (e.g., `jss.company.com:8443`, `jamfpro.mycompany.com`) after a one-time access grant from the extension popup.
+- **Persistent Access** — The access grant is permanent across browser restarts. All features work identically on custom domains.
+- **Per-Instance Management** — Add/remove custom domains from the extension popup. The sidebar panel (inside Jamf Pro) shows the list and supports deletion.
+
+### macOS Keychain Integration
+
+- **Encrypted Credential Storage** — Jamf Pro API credentials are stored in the macOS Keychain instead of unencrypted browser storage.
+- **Safari App Gateway** — The Jamf Extender Safari app acts as the Keychain gateway for all browsers. Safari uses Keychain automatically; Chrome, Edge, and Firefox opt in via "Set Up Other Browsers" in the Safari app.
+- **Cross-Browser Sharing** — Credentials saved in any browser are immediately available in all other browsers through a shared Keychain entry (service `com.jamf.jex`, account = Jamf Pro origin).
+- **Automatic Migration** — Existing credentials in browser storage are migrated to Keychain on first launch after the helper becomes available. Falls back to browser storage if the Safari app is not installed.
+
 ### General
 
 - **Persistent Status Pill** — Always-visible indicator showing extension state (awaiting login, needs configuration, credentials expired, permissions needed, or active). Appears on both Jamf Pro and Security Cloud pages.
 - **Nav Bar Shortcuts** — Bookmark any Jamf Pro page as a quick-link shortcut button in the top navigation bar. Click the "+" button in the shortcut bar (or "Add Current Page" in the sidebar Shortcuts section) to add the current page. Shortcuts appear as pill-shaped buttons centered in the top nav bar, with active-page highlighting. Shortcuts are stored per Jamf Pro instance, so each server (e.g. overview.jamfcloud.com vs trial.jamfcloud.com) has its own independent set. Manage shortcuts (edit, reorder via drag-and-drop, delete) in the sidebar panel's Shortcuts section.
-- **Sidebar Settings Panel** — A "Jamf Extender" button in the Jamf Pro sidebar navigation (above "Resource Center") opens a flyout panel with the same settings as the toolbar popup: MUT button (opens full Mass Update Tool overlay inline), Preferences (shimmer, hide dashboard setup cards, performance toggles, Security Cloud panel toggle, Jamf Protect panel toggle, nav bar color), Shortcuts (list, reorder, edit, delete, add current page), Portal Groups (add/delete, with optional Security Cloud and Protect linking), and Configurations (Quick Setup, manual credential entry). Closes on re-click, click outside, Escape, or page navigation. Panel repositions when the sidebar collapses/expands.
+- **Sidebar Settings Panel** — A "Jamf Extender" button in the Jamf Pro sidebar navigation (above "Resource Center") opens a flyout panel with the same settings as the toolbar popup: MUT button (opens full Mass Update Tool overlay inline), Preferences (shimmer, hide dashboard setup cards, Security Cloud panel toggle, Jamf Protect panel toggle, nav bar color), Shortcuts (list, reorder, edit, delete, add current page), Portal Groups (add/delete, with optional Security Cloud and Protect linking), and Configurations (Quick Setup, manual credential entry). Closes on re-click, click outside, Escape, or page navigation. Panel repositions when the sidebar collapses/expands.
 - **Pre-scan Permission Checks** — Scans are blocked entirely if the API client is missing required permissions, with a clear message and link to re-run Quick Setup
 - **Nav Bar Color** — Customize the Jamf Pro top navigation bar color via a color picker in the extension popup under **Preferences**. Changes apply live without page reload. Click "Reset" to restore the default.
 - **Shimmer Underlines** — Animated gradient underlines on all hoverable/interactive elements (group names, counts, scope cells, profile status links) to signal interactivity. Can be toggled on/off in the extension popup under **Preferences**.
@@ -151,18 +186,22 @@ Now, when you view a device detail page in that Jamf Pro instance, the Security 
 
 Once configured, navigate to any of these Jamf Pro pages:
 
-| Page                              | What you get                                                                                                                                                                                                                                                                                       |
-| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Smart Computer Groups list        | Hover popovers on names/counts, "Where it's used" drawer per group, scan status bar with nesting badges                                                                                                                                                                                            |
-| Smart Computer Group detail       | Inline device table with serial numbers below the group info                                                                                                                                                                                                                                       |
-| Smart Mobile Device Groups list   | Same as computer groups but for mobile devices — popovers, drawers, scan bar                                                                                                                                                                                                                       |
-| Smart Mobile Device Group detail  | Inline device table with serial, Wi-Fi MAC below the group info                                                                                                                                                                                                                                    |
-| macOS Configuration Profiles list | Payloads drawer per profile, Compare Profiles side-by-side modal, scope hover with group membership, Completed/Pending/Failed status popovers                                                                                                                                                      |
-| iOS Configuration Profiles list   | Payloads drawer per profile, Compare Profiles side-by-side modal, scope hover with group membership, Completed/Pending/Failed status popovers                                                                                                                                                      |
-| Policies list                     | Hover popovers on Scope column, risk report bar for Ongoing + Recurring Check-in policies                                                                                                                                                                                                          |
-| Mobile device apps list           | Security Cloud app risk badges (HIGH/MEDIUM/LOW) inline next to each app name (requires Portal Group)                                                                                                                                                                                              |
-| Computer detail                   | Two device performance tabs in side nav (Performance 1: healthy device, Performance 2: struggling device — health gauges, trends, threshold events, app stability, network stats) + Security Cloud side panel (requires Portal Group) + Jamf Protect status section (requires Protect credentials) |
-| Mobile device detail              | Security Cloud side panel (risk, status, enrollment, last update, DNS traffic, threats, vulnerability per-software breakdown) with link to Security Cloud (requires Portal Group)                                                                                                                  |
+| Page                              | What you get                                                                                                                                                                      |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Smart Computer Groups list        | Hover popovers on names/counts, "Where it's used" drawer per group, scan status bar with nesting badges                                                                           |
+| Smart Computer Group detail       | Inline device table with serial numbers below the group info                                                                                                                      |
+| Smart Mobile Device Groups list   | Same as computer groups but for mobile devices — popovers, drawers, scan bar                                                                                                      |
+| Smart Mobile Device Group detail  | Inline device table with serial, Wi-Fi MAC below the group info                                                                                                                   |
+| macOS Configuration Profiles list | Payloads drawer per profile, Compare Profiles side-by-side modal, scope hover with group membership, Completed/Pending/Failed status popovers                                     |
+| iOS Configuration Profiles list   | Payloads drawer per profile, Compare Profiles side-by-side modal, scope hover with group membership, Completed/Pending/Failed status popovers                                     |
+| Policies list                     | Hover popovers on Scope column, risk report bar for Ongoing + Recurring Check-in policies                                                                                         |
+| Blueprints list                   | Hover popovers on blueprint cards — settings breakdown (DDM, passcode, software update, etc.) and resolved scope with device-level CSV export                                     |
+| Licensed Software list            | Application Usage Report + Unused App Search with time-range selector, advanced computer search picker, saved searches, and CSV export                                            |
+| Change Management Logs            | Advanced filter bar (Username, Object Type, Object Name, Action) with live row count and Clear                                                                                    |
+| Mobile device apps list           | Security Cloud app risk badges (HIGH/MEDIUM/LOW) inline next to each app name (requires Portal Group)                                                                             |
+| Mobile device app detail          | Live XML/Plist validator on the AppConfig editor — bracket/tag/plist checks, line-number gutter, inline issue list (no credentials required)                                      |
+| Computer detail                   | Security Cloud side panel (requires Portal Group) + Jamf Protect status section (requires Protect credentials)                                                                    |
+| Mobile device detail              | Security Cloud side panel (risk, status, enrollment, last update, DNS traffic, threats, vulnerability per-software breakdown) with link to Security Cloud (requires Portal Group) |
 
 The **status pill** next to the Jamf Pro logo shows the current extension state (not shown on `*.protect.jamfcloud.com` pages):
 
