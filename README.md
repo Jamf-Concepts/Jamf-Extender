@@ -7,6 +7,7 @@
 A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data without navigating away from the page.
 
 [Install for Safari from Mac App Store](https://apps.apple.com/us/app/jamf-extender/id6761075435?mt=12)
+- **Note** — When using Safari, once the extension is installed via the App, "Set Up Automatically" might return a false error. After clicking Set Up Automatically, regardless of error or not, refresh the Jamf Pro page and the status pill should show "Extension Active" meaning setup is complete. [bug](https://github.com/Jamf-Concepts/Jamf-Extender/issues/23)
 
 [Install for Firefox from Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/jamf-extender/)
 
