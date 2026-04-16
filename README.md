@@ -6,7 +6,7 @@
 
 A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data without navigating away from the page.
 
-[Install for Safari from Mac App Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk)
+[Install for Safari from Mac App Store](https://apps.apple.com/us/app/jamf-extender/id6761075435?mt=12)
 
 [Install for Firefox from Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/jamf-extender/)
 
@@ -18,16 +18,6 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 Jamf Pro API credentials are now stored encrypted in the macOS Keychain instead of unencrypted browser storage. The **Jamf Extender Safari app** acts as a Keychain gateway for all browsers — credentials saved in any browser are shared via a single Keychain entry. Safari uses Keychain automatically; Chrome, Edge, and Firefox can opt in by opening the Safari app and clicking **"Set Up Other Browsers"**. Existing credentials are migrated automatically on first launch. Falls back to browser storage if the Safari app is not installed.
 
-### API Role Privilege Picker
-
-Jamf Pro's native Privileges combobox is a slow, text-only search across hundreds of entries. Jamf Extender injects a **Privilege Picker** panel directly beneath the Privileges field on any API role edit page:
-
-- **Resource-grouped CRUD grid** — privileges are parsed into rows per resource (e.g., "Computers", "Smart Computer Groups") with C/R/U/D checkboxes in columns. Disabled cells show actions that don't exist for a given resource.
-- **Category filters** — quick pills for All / Selected / Create / Read / Update / Delete / Other to narrow the list at a glance.
-- **Paste CSV to filter** — paste a comma- or newline-separated list of privilege names into the search box and the picker filters (and highlights) exactly those entries. Click **"Select From Input"** to toggle them all on in one shot — great for replicating a role from another instance or applying a known-good privilege set.
-- **Select All Visible / Deselect All** — bulk operate on whatever's currently filtered.
-- **Save Role** — writes the selected privileges back to Jamf Pro via the Pro API (POST for new roles, PUT for existing) and, for new roles, redirects to the edit URL so you can keep iterating.
-
 ### Mobile Device Apps — XML Validator
 
 A live XML/Plist syntax assistant on the mobile device app detail page (`mobileDeviceApps.html?id={id}`). As you type in the AppConfig plist textarea, the assistant checks for bracket/quote balance, malformed tags, unescaped `&` characters, tag matching, plist structure (key/value alternation in `<dict>`), leading/trailing whitespace, and empty values. A line-number gutter is injected alongside the textarea. Issues show severity, line number, and a suggested fix. Runs entirely client-side — no credentials required.
@@ -36,15 +26,16 @@ A live XML/Plist syntax assistant on the mobile device app detail page (`mobileD
 
 An **Advanced Filtering** bar is injected above the Change Management Logs table with per-column filters: free-text inputs for Username, Object Type, and Object Name, plus an Action dropdown (Created, Updated, Deleted, etc.). Filters apply live as you type and combine with AND logic. A row counter shows how many entries match, and a Clear button resets all filters in one click — much faster than scrolling or re-sorting the native table.
 
-### Dashboard Health Status
+### Custom Jamf Pro Domains (Self-Hosted)
 
-An inline **Health** indicator appears next to the Jamf Pro version on the dashboard. It calls Jamf Pro's built-in `GET /api/v1/health-status` endpoint (authenticated with your API client) and reads the **`oneMinute`** metric for each reported health group — a ratio from 0.0 to 1.0 representing the rolling success rate of Jamf Pro's internal health probes for that subsystem over the last 60 seconds.
+If your Jamf Pro instance uses a custom domain (e.g., `jss.company.com:8443`, `jamfpro.mycompany.com`) instead of `*.jamfcloud.com`:
 
-- **"Healthy"** (green) — every group's `oneMinute` ratio is 1.0 (100%).
-- **"{N} degraded"** (yellow) — N groups are currently below 100%, meaning some internal probes failed in the last minute.
-- **"Unavailable"** / **"Unknown"** — the endpoint didn't respond or returned no recognizable metrics.
+1. Navigate to your self-hosted Jamf Pro page and click the **Jamf Extender** icon in the toolbar
+2. Click **"Grant Access to Jamf Extender on This Site"** and approve the browser prompt (the extension will close after granting)
+3. Re-open the extension and click **"Add as Jamf Pro Instance"**
+4. Run **Quick Setup** to create API credentials for the new instance
 
-Note: this surfaces Jamf Pro's own internal probe ratios — it is not a holistic environment check (no cert expiry, disk space, backup status, APNs latency, or patch feed freshness).
+The access grant is permanent as long as you have the browser installed, and it persists across browser restarts. All features work identically on custom domains. The sidebar panel (inside Jamf Pro) shows the custom domain list and supports deletion, but adding new domains must be done from the extension popup.
 
 ## Features
 
@@ -101,11 +92,6 @@ Note: this surfaces Jamf Pro's own internal probe ratios — it is not a holisti
 - **Advanced Filtering Bar** — On the Change Management Logs page, a filter bar is injected above the native table with free-text inputs for Username, Object Type, and Object Name, plus an Action dropdown. Filters apply live and combine with AND logic.
 - **Row Counter + Clear** — A live count of matching rows updates as you type. A Clear button resets all filters in a single click.
 
-### Dashboard Health
-
-- **Inline Health Indicator** — On the Jamf Pro dashboard, a **"Health:"** status appears next to the version string in the footer/aside area. Polls Jamf Pro's `GET /api/v1/health-status` endpoint and reads the `oneMinute` probe-success ratio per health group. Shows **"Healthy"** (all groups at 100% over the last minute), **"{N} degraded"** (one or more groups below 100%), or **"Unavailable"** / **"Unknown"** if the endpoint doesn't respond.
-- **Expandable Breakdown** — Click the chevron to reveal a per-group list with color-coded percentages (green for 100%, yellow for <100%) so you can pinpoint which subsystem is affected without leaving the dashboard. This reflects Jamf Pro's own internal service probes — it does not cover certificate expiry, disk space, backup state, APNs push latency, or patch feed freshness.
-
 ### Jamf Security Cloud (Security Cloud)
 
 - **Quick Setup** — Detects `radar.wandera.com` tabs and generates API client keys automatically using your active session cookies. Credentials are stored per customer ID to support multiple Security Cloud instances.
@@ -132,12 +118,6 @@ Note: this surfaces Jamf Pro's own internal probe ratios — it is not a holisti
 - **Background Processing** — Records are processed sequentially in the background service worker with per-record progress tracking. The popup can be closed and reopened without losing progress.
 - **Cancel & Resume** — Cancel a running batch at any time. Reopen the popup to see current progress or results.
 - **Results & Log** — After completion, see succeeded/failed counts with a scrollable error list. Download a CSV log of all results.
-
-### API Roles & Clients
-
-- **Privilege Picker** — On any API role edit page, a panel appears beneath the native Privileges combobox with a resource-grouped CRUD grid, category filter pills (All / Selected / Create / Read / Update / Delete / Other), text search, and **paste-to-filter** support (paste a CSV/newline-separated list of privilege names to instantly filter and highlight only those).
-- **Bulk Operations** — "Select All Visible" toggles everything currently filtered; "Select From Input" selects only the entries matched by a pasted CSV; "Deselect All" clears the entire role.
-- **Save Role** — Saves selected privileges directly via the Jamf Pro API (POST for new roles, PUT for existing) without needing to click through the native save flow. New roles auto-redirect to their edit URL after creation.
 
 ### Custom Jamf Pro Domains (Self-Hosted)
 
@@ -220,8 +200,6 @@ Once configured, navigate to any of these Jamf Pro pages:
 | Change Management Logs            | Advanced filter bar (Username, Object Type, Object Name, Action) with live row count and Clear                                                                                    |
 | Mobile device apps list           | Security Cloud app risk badges (HIGH/MEDIUM/LOW) inline next to each app name (requires Portal Group)                                                                             |
 | Mobile device app detail          | Live XML/Plist validator on the AppConfig editor — bracket/tag/plist checks, line-number gutter, inline issue list (no credentials required)                                      |
-| API Role edit                     | Privilege Picker panel — resource-grouped CRUD grid, category filters, paste-CSV to filter, bulk select, direct save via API                                                      |
-| Dashboard                         | Inline "Health:" status next to the Jamf Pro version — expandable per-group `oneMinute` probe-success ratios                                                                      |
 | Computer detail                   | Security Cloud side panel (requires Portal Group) + Jamf Protect status section (requires Protect credentials)                                                                    |
 | Mobile device detail              | Security Cloud side panel (risk, status, enrollment, last update, DNS traffic, threats, vulnerability per-software breakdown) with link to Security Cloud (requires Portal Group) |
 
