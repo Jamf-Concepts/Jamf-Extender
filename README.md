@@ -46,17 +46,6 @@ An inline **Health** indicator appears next to the Jamf Pro version on the dashb
 
 Note: this surfaces Jamf Pro's own internal probe ratios — it is not a holistic environment check (no cert expiry, disk space, backup status, APNs latency, or patch feed freshness).
 
-### Custom Jamf Pro Domains (Self-Hosted)
-
-If your Jamf Pro instance uses a custom domain (e.g., `jss.company.com:8443`, `jamfpro.mycompany.com`) instead of `*.jamfcloud.com`:
-
-1. Navigate to your self-hosted Jamf Pro page and click the **Jamf Extender** icon in the toolbar
-2. Click **"Grant Access to Jamf Extender on This Site"** and approve the browser prompt (the extension will close after granting)
-3. Re-open the extension and click **"Add as Jamf Pro Instance"**
-4. Run **Quick Setup** to create API credentials for the new instance
-
-The access grant is permanent as long as you have the browser installed, and it persists across browser restarts. All features work identically on custom domains. The sidebar panel (inside Jamf Pro) shows the custom domain list and supports deletion, but adding new domains must be done from the extension popup.
-
 ## Features
 
 ### Smart Computer Groups
@@ -101,6 +90,12 @@ The access grant is permanent as long as you have the browser installed, and it 
 - **Application Usage Report** — On the Licensed Software list page (`licensedSoftware.html`), a panel above the table lets you select an Advanced Computer Search, pick a time range (1 day, 7 days, 30 days, 3 months, 1 year, or custom dates), and run an aggregated application usage report across all computers in that search. Results show each application's total foreground time, total opens, and number of distinct computers — sortable by any column and filterable by app name. The selected search is saved per Jamf Pro instance.
 - **Unused App Search** — A second tab on the same panel. Enter an application name (case-insensitive partial match), select an Advanced Computer Search and time range, then click "Find Devices" to discover all computers that have NOT used that application in the specified period. Results show Computer Name (linked to device record), Serial Number, Username, Email, Model, and Computer ID with a summary count (e.g., "12 of 50 devices have not used Self Service in the last 30 days"). Export results as CSV (named after the search) via the "Export CSV" button. Save your search configuration (search + app name + time range) with "Save Search" and reload it later from the "Saved Searches" dropdown.
 
+### Mobile Device Apps — XML Validator
+
+- **Live Syntax Assistant** — On the mobile device app detail/edit page (`mobileDeviceApps.html?id={id}`), a validation panel appears below the AppConfig plist textarea. As you type, the assistant checks bracket/quote balance, malformed tags, unescaped `&` characters, tag matching, plist structure (key/value alternation in `<dict>`), leading/trailing whitespace in values, and empty/blank elements.
+- **Line Number Gutter** — A line-number gutter is injected alongside the textarea for quick reference when issues point at specific lines.
+- **Issue Cards** — Problems are listed with severity badges, line numbers, and suggested fixes. Runs entirely client-side — no credentials required.
+
 ### Change Management Logs
 
 - **Advanced Filtering Bar** — On the Change Management Logs page, a filter bar is injected above the native table with free-text inputs for Username, Object Type, and Object Name, plus an Action dropdown. Filters apply live and combine with AND logic.
@@ -143,6 +138,19 @@ The access grant is permanent as long as you have the browser installed, and it 
 - **Privilege Picker** — On any API role edit page, a panel appears beneath the native Privileges combobox with a resource-grouped CRUD grid, category filter pills (All / Selected / Create / Read / Update / Delete / Other), text search, and **paste-to-filter** support (paste a CSV/newline-separated list of privilege names to instantly filter and highlight only those).
 - **Bulk Operations** — "Select All Visible" toggles everything currently filtered; "Select From Input" selects only the entries matched by a pasted CSV; "Deselect All" clears the entire role.
 - **Save Role** — Saves selected privileges directly via the Jamf Pro API (POST for new roles, PUT for existing) without needing to click through the native save flow. New roles auto-redirect to their edit URL after creation.
+
+### Custom Jamf Pro Domains (Self-Hosted)
+
+- **Self-Hosted Support** — Works out of the box with `*.jamfcloud.com` instances, and supports self-hosted or custom domain Jamf Pro instances (e.g., `jss.company.com:8443`, `jamfpro.mycompany.com`) after a one-time access grant from the extension popup.
+- **Persistent Access** — The access grant is permanent across browser restarts. All features work identically on custom domains.
+- **Per-Instance Management** — Add/remove custom domains from the extension popup. The sidebar panel (inside Jamf Pro) shows the list and supports deletion.
+
+### macOS Keychain Integration
+
+- **Encrypted Credential Storage** — Jamf Pro API credentials are stored in the macOS Keychain instead of unencrypted browser storage.
+- **Safari App Gateway** — The Jamf Extender Safari app acts as the Keychain gateway for all browsers. Safari uses Keychain automatically; Chrome, Edge, and Firefox opt in via "Set Up Other Browsers" in the Safari app.
+- **Cross-Browser Sharing** — Credentials saved in any browser are immediately available in all other browsers through a shared Keychain entry (service `com.jamf.jex`, account = Jamf Pro origin).
+- **Automatic Migration** — Existing credentials in browser storage are migrated to Keychain on first launch after the helper becomes available. Falls back to browser storage if the Safari app is not installed.
 
 ### General
 
