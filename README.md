@@ -13,7 +13,7 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 [Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
 
-## What's new in 1.2.0
+## What's new
 
 ### macOS Keychain Integration
 
