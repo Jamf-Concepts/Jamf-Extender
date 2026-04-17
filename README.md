@@ -7,7 +7,6 @@
 A Chrome extension that enhances the Jamf Pro web interface with inline smart group membership, configuration profile deployment status, policy scope details, and smart group usage data without navigating away from the page.
 
 [Install for Safari from Mac App Store](https://apps.apple.com/us/app/jamf-extender/id6761075435?mt=12)
-- **Note** — When using Safari, once the extension is installed via the App, "Set Up Automatically" might return a false error. After clicking Set Up Automatically, regardless of error or not, refresh the Jamf Pro page and the status pill should show "Extension Active" meaning setup is complete. [bug](https://github.com/Jamf-Concepts/Jamf-Extender/issues/23)
 
 [Install for Firefox from Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/jamf-extender/)
 
@@ -37,6 +36,23 @@ If your Jamf Pro instance uses a custom domain (e.g., `jss.company.com:8443`, `j
 4. Run **Quick Setup** to create API credentials for the new instance
 
 The access grant is permanent as long as you have the browser installed, and it persists across browser restarts. All features work identically on custom domains. The sidebar panel (inside Jamf Pro) shows the custom domain list and supports deletion, but adding new domains must be done from the extension popup.
+
+### API ROLE PRIVILEGE PICKER
+
+- Resource-grouped CRUD grid with per-resource Create/Read/Update/Delete checkboxes — much faster than Jamf Pro's text-only combobox search
+- Category filter pills (All, Selected, Create, Read, Update, Delete, Other) to narrow the list at a glance
+- Paste a comma- or newline-separated list of privilege names to filter and highlight exactly those entries, then click "Select From Input" to toggle them all on at once — ideal for replicating a role across instances
+- "Select All Visible" and "Deselect All" for bulk operations on whatever's currently filtered
+- "Save Role" writes selected privileges directly via the Jamf Pro API (POST for new, PUT for existing) without needing to click through the native save flow
+
+### DASHBOARD HEALTH STATUS
+
+- Inline "Health:" indicator next to the Jamf Pro version on the dashboard
+- Polls Jamf Pro's built-in /api/v1/health-status endpoint and reads the oneMinute probe-success ratio per health group
+- Shows "Healthy" when every group is at 100% over the last minute, "{N} degraded" when any are below, or "Unavailable" if the endpoint doesn't respond
+- Expandable per-group breakdown with color-coded percentages so you can pinpoint affected subsystems without leaving the dashboard
+- Reflects Jamf Pro's own internal service probes — does not cover certificate expiry, disk space, backup state, or patch feed freshness
+
 
 ## Features
 
