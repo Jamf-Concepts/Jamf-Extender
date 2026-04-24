@@ -14,6 +14,14 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 ## What's new
 
+- Instance Label — a global toggle plus background and text color pickers that auto-populates a pill with the instance name across every Jamf Pro you manage (stacks with the per-origin Nav Bar Label)
+- Deeplinks in dropdowns for packages, scripts and printers in All Policies dashboard
+- Extension Attributes in the column picker on computer and mobile-device search results 
+- Column picker + CSV export now works on advanced searches, all devices search, and smart groups (anywhere there's a table of devices)
+- API Role Privilege Picker pre-checks existing privileges on edit pages and navigates back to the view state after Save
+
+## Features
+
 ### macOS Keychain Integration
 
 Jamf Pro API credentials are now stored encrypted in the macOS Keychain instead of unencrypted browser storage. The **Jamf Extender Safari app** acts as a Keychain gateway for all browsers — credentials saved in any browser are shared via a single Keychain entry. Safari uses Keychain automatically; Chrome, Edge, and Firefox can opt in by opening the Safari app and clicking **"Set Up Other Browsers"**. Existing credentials are migrated automatically on first launch. Falls back to browser storage if the Safari app is not installed.
@@ -52,9 +60,6 @@ The access grant is permanent as long as you have the browser installed, and it 
 - Shows "Healthy" when every group is at 100% over the last minute, "{N} degraded" when any are below, or "Unavailable" if the endpoint doesn't respond
 - Expandable per-group breakdown with color-coded percentages so you can pinpoint affected subsystems without leaving the dashboard
 - Reflects Jamf Pro's own internal service probes — does not cover certificate expiry, disk space, backup state, or patch feed freshness
-
-
-## Features
 
 ### Smart Computer Groups
 
