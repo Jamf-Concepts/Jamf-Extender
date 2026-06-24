@@ -12,13 +12,13 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 [Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
 
-## What's new
+## What's new in 1.2.6
 
-- Instance Label — a global toggle plus background and text color pickers that auto-populates a pill with the instance name across every Jamf Pro you manage (stacks with the per-origin Nav Bar Label)
-- Deeplinks in dropdowns for packages, scripts and printers in All Policies dashboard
-- Extension Attributes in the column picker on computer and mobile-device search results 
-- Column picker + CSV export now works on advanced searches, all devices search, and smart groups (anywhere there's a table of devices)
-- API Role Privilege Picker pre-checks existing privileges on edit pages and navigates back to the view state after Save
+- Added ability to export and import Jamf Extender preferences between browsers
+- Added feature toggles to hide/show visuals that are not needed (vpp/apps count, jamf health status etc)
+- Added Self Service/Install Automatically in Mobile Apps main page
+- Added search for Attachments in computer and devices
+- Added a few QOL features and squashed a few bugs
 
 ## Features
 
