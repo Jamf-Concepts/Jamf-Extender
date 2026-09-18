@@ -12,13 +12,16 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 [Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
 
-## What's new in 1.2.6
+## NEW IN 1.2.6 - 1.3.3
 
+- Added spotlight-style search and navigation feature via magnifying glass and cmd+k
 - Added ability to export and import Jamf Extender preferences between browsers
-- Added feature toggles to hide/show visuals that are not needed (vpp/apps count, jamf health status etc)
+- Added feature toggles to hide/show visuals that are not needed
 - Added Self Service/Install Automatically in Mobile Apps main page
-- Added search for Attachments in computer and devices
-- Added a few QOL features and squashed a few bugs
+- Added a search for "Attachments" search in the main Computer/Mobile Device Search dropdown
+- Added support for AI Governance features
+- Dashboard Node Health status more meaningful
+- Resolved a few bugs
 
 ## Features
 
