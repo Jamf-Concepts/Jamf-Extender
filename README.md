@@ -12,16 +12,19 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 [Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
 
-## What's new in 1.2.6 - 1.3.4
+## What's new in 1.2.3 – 1.3.5
 
-- Added spotlight-style search and navigation feature via magnifying glass and cmd+k
-- Added ability to export and import Jamf Extender preferences between browsers
-- Added feature toggles to hide/show visuals that are not needed
-- Added Self Service/Install Automatically in Mobile Apps main page
-- Added a search for "Attachments" search in the main Computer/Mobile Device Search dropdown
-- Added support for AI Governance features
-- Dashboard Node Health status more meaningful
-- Resolved a few bugs
+- Spotlight-style search and navigation (Cmd+K or the magnifying-glass button) across Jamf Pro, Jamf Protect, and Jamf Security Cloud
+- Apple School Manager / Apple Business Manager tools are on by default: Location / Org Unit management (move users and classes, reclaim and transfer licenses, delete a location), MDM server management, searchable lists behind the summary rows, and an "ASM / ABM extender" preference to turn them off
+- Jamf Account AI Governance: export Claude Code and Claude Desktop policies for Windows, and deploy AI Visibility prevent lists to Jamf Protect; both keep working after Jamf's AI Governance API change
+- Read features now run on your active Jamf Pro sign-in, so they work without Quick Setup (the API client is only needed for the few write actions)
+- Mobile app security report on Mobile Device Apps and Jamf Security Cloud, with saved keys you can update or remove
+- Instance Label pill, Extension Attributes in the column picker, and column picker + CSV export on advanced searches, all-devices search, and smart groups
+- Export and import Jamf Extender preferences between browsers, plus toggles to hide visuals you don't need
+- Self Service / Install Automatically in Mobile Apps, and an "Attachments" entry in the Computer / Mobile Device Search dropdown
+- Deeplinks in All Policies dropdowns, a more meaningful Dashboard Node Health status, and a disabled-policy bucket in the Policy Risk Report
+- API Role Privilege Picker pre-checks existing privileges when editing
+- Reliability fixes, including Firefox multi-tab startup and Safari ASM / ABM request handling
 
 ## Features
 
