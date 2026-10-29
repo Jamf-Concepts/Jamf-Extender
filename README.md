@@ -12,7 +12,7 @@ A Chrome extension that enhances the Jamf Pro web interface with inline smart gr
 
 [Install for Chrome and Edge from Chrome Web Store](https://chromewebstore.google.com/detail/jamf-extender/gjgdljckajmddkbcodiaimlfhjalfdnk) (For Edge, enable "Allow extensions from other stores" then navigate to this link.)
 
-## NEW IN 1.2.3 - 1.3.5
+## What's new in 1.2.3 – 1.3.5
 
 - Spotlight-style search and navigation (Cmd+K or the magnifying-glass button) across Jamf Pro, Jamf Protect, and Jamf Security Cloud
 - Apple School Manager / Apple Business Manager tools are on by default: Location / Org Unit management (move users and classes, reclaim and transfer licenses, delete a location), MDM server management, searchable lists behind the summary rows, and an "ASM / ABM extender" preference to turn them off
